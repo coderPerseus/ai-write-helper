@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
-  "version": "0.3.4",
-  "description": "chrome extension boilerplate",
+  "name": "ai-writing-assistant",
+  "version": "0.0.1",
+  "description": "码农写作助手",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/coderPerseus/ai-write-helper"
   },
   "type": "module",
   "scripts": {

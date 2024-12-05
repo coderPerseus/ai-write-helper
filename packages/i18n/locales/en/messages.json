@@ -1,30 +1,30 @@
 {
   "extensionDescription": {
-    "description": "Extension description",
-    "message": "Chrome extension boilerplate developed with Vite, React and Typescript"
+    "description": "插件描述",
+    "message": "码农写作助手，帮你快速生成内容"
   },
   "extensionName": {
-    "description": "Extension name",
-    "message": "Chrome extension boilerplate"
+    "description": "插件名称",
+    "message": "码农写作助手"
   },
   "toggleTheme": {
-    "message": "Toggle theme"
+    "message": "切换主题"
   },
   "loading": {
-    "message": "Loading..."
+    "message": "加载中..."
   },
   "greeting": {
-    "description": "Greeting message",
-    "message": "Hello, My name is $NAME$",
+    "description": "问候消息",
+    "message": "你好，我叫 $NAME$",
     "placeholders": {
       "name": {
         "content": "$1",
-        "example": "John Doe"
+        "example": "Lucky Snail"
       }
     }
   },
   "hello": {
-    "description": "Placeholder example",
-    "message": "Hello $1"
+    "description": "占位符示例",
+    "message": "你好 $1"
   }
 }

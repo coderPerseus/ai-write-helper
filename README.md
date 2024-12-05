@@ -1,238 +1,122 @@
-<div align="center">
+# 项目基础
+一个基于 https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite 模板的chrome插件项目
+## 技术栈
 
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/99cb6303-64e4-4bed-bf3f-35735353e6de" />
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/a5dbf71c-c509-4c4f-80f4-be88a1943b0a" />
-    <img alt="Logo" src="https://github.com/user-attachments/assets/99cb6303-64e4-4bed-bf3f-35735353e6de" />
-</picture>
+React 18
+TypeScript
+Vite (构建工具)
+TailwindCSS (样式框架)
+Turborepo (monorepo 管理工具)
 
-![](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![](https://badges.aleen42.com/src/vitejs.svg)
+## 主要功能
 
-![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/build-zip.yml/badge.svg)
-![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/lint.yml/badge.svg)
+支持 Chrome Extensions Manifest V3 (最新版扩展标准)
+支持热更新(HMR)开发
+内置国际化(i18n)支持
+完整的 TypeScript 类型支持
+包含 ESLint 和 Prettier 代码规范配置
+自定义 HMR（热模块重建）插件
+使用 WebdriverIO 进行端到端测试
 
-<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/Jonghakseo/chrome-extension-boilerplate-react-viteFactions&count_bg=%23#222222&title_bg=%23#454545&title=😀&edge_flat=true" alt="hits"/>
-<a href="https://discord.gg/4ERQ6jgV9a" target="_blank"><img src="https://discord.com/api/guilds/1263404974830915637/widget.png"/></a>
 
-> This boilerplate
-> has [Legacy version](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/tree/legacy)
+## 项目结构
 
-</div>
+主要包含以下几个部分:
+pages/: 扩展的各个页面
+popup (点击扩展图标显示的弹窗)
+options (扩展的设置页面)
+content (注入到网页中的脚本)
+devtools (开发者工具面板)
+new-tab (新标签页)
+side-panel (侧边栏)
+packages/: 共享的功能模块
+ui (UI组件)
+storage (存储相关)
+i18n (国际化)
+shared (共享代码)
 
-> [!NOTE]
-> This project is listed in the [Awesome Vite](https://github.com/vitejs/awesome-vite)
+## 开发流程
 
-> [!TIP]
-> Share storage state between all pages
->
-> https://github.com/user-attachments/assets/3b8e189f-6443-490e-a455-4f9570267f8c
+```bash
+# 安装依赖
+pnpm install
 
-## Table of Contents
+# 开发模式
+pnpm dev
 
-- [Intro](#intro)
-- [Features](#features)
-- [Structure](#structure)
-    - [ChromeExtension](#structure-chrome-extension)
-    - [Packages](#structure-packages)
-    - [Pages](#structure-pages)
-- [Getting started](#getting-started)
-    - [Chrome](#getting-started-chrome)
-    - [Firefox](#getting-started-firefox)
-- [Install dependency](#install-dependency)
-    - [For root](#install-dependency-for-root)
-    - [For module](#install-dependency-for-module)
-- [Community](#community)
-- [Reference](#reference)
-- [Star History](#star-history)
-- [Contributors](#contributors)
+# 生产构建
+pnpm build
+```
 
-## Intro
+## 项目启动后
 
-This boilerplate helps you create Chrome/Firefox extensions using React and Typescript. It improves
-the build speed and development experience by using Vite and Turborepo.
+1. 首先运行开发命令: `pnpm dev`
+2. 打开 Chrome 浏览器,进入扩展管理页面:
+   在地址栏输入: chrome://extensions/
+   或者点击浏览器右上角的"扩展"图标,选择"管理扩展程序"
+3. 在扩展管理页面: 
+- 打开右上角的"开发者模式"开关
+- 点击左上角的"加载已解压的扩展程序"按钮
+- 选择项目中的 dist 目录
+4. 安装成功后,您可以在以下位置看到扩展的不同部分:
+- 弹出窗口(Popup)
+- 点击浏览器工具栏中的扩展图标
+5. 新标签页(New Tab)
+- 打开新的标签页即可看到
+6. 内容脚本(Content Script)
+- 访问任意网页,在页面底部可以看到注入的 UI
+7. 开发者工具面板(DevTools)
+- 打开浏览器开发者工具(F12)
+- 在顶部标签中可以看到新增的面板
+8. 侧边栏(Side Panel)
+- 点击浏览器工具栏的扩展图标
+- 选择"在侧边栏中打开"
+9. 选项页面(Options)
+- 在扩展图标上右键
+- 选择"选项"
 
-## Features
+开发提示:
+代码修改后会自动重新构建
+大多数情况下会自动重新加载扩展
+如果没有自动重新加载,可以在扩展管理页面手动点击"重新加载"
+建议打开 Chrome 的开发者工具查看控制台输出
 
-- [React18](https://reactjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwindcss](https://tailwindcss.com/)
-- [Vite](https://vitejs.dev/) (and [Rollup](https://rollupjs.org/))
-- [Turborepo](https://turbo.build/repo)
-- [Prettier](https://prettier.io/)
-- [ESLint](https://eslint.org/)
-- [Chrome Extensions Manifest Version 3](https://developer.chrome.com/docs/extensions/mv3/intro/)
-- [Custom i18n package](/packages/i18n/)
-- [Custom HMR (Hot Module Rebuild) plugin](/packages/hmr/)
-- [End-to-end testing with WebdriverIO](https://webdriver.io/)
 
-## Getting started
+## 知识点
 
-1. When you're using Windows run this:
-   - `git config --global core.eol lf`
-   - `git config --global core.autocrlf input`
+1）chrome.tabs.create ：在当前窗口中创建一个新标签页，并导航到指定的 URL
 
-   **This will set the EOL (End of line) character to be the same as on Linux/macOS. Without this, our bash script won't work, and you will have conflicts with developers on Linux/macOS.**
-2. Clone this repository.
-3. Edit `/packages/i18n/locales/`{your locale(s)}/`messages.json`
-4. In the objects `extensionDescription` and `extensionName`, change the `message` fields (leave `description` alone)
-5. In `/.package.json`, change the `version` to the desired version of your extension.
-6. Install pnpm globally: `npm install -g pnpm` (check your node version >= 18.19.1))
-7. Run `pnpm install`
+2）chrome.scripting.executeScript ：在当前页面中注入脚本 ，
+```js
+chrome.scripting.executeScript({
+  target: { tabId: tab.id! },
+  files: ['/content-runtime/index.iife.js'],
+})
+```
+- target ：指定注入目标，tabId 表示指定标签页，如果不指定，则默认注入到当前标签页
+- files ：指定注入的脚本文件，相对于 manifest.json 中的 js 字段
 
-Then, depending on the target browser:
+3）chrome.tabs.query ：获取当前页面信息，{ currentWindow: true, active: true } 表示当前窗口和当前活动标签页，返回一个包含当前标签页信息的数组
 
-### For Chrome: <a name="getting-started-chrome"></a>
+# 码农写作助手开发
 
-1. Run:
-    - Dev: `pnpm dev` (on Windows, you should run as administrator; see [issue#456](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/issues/456))
-    - Prod: `pnpm build`
-2. Open in browser - `chrome://extensions`
-3. Check - <kbd>Developer mode</kbd>
-4. Click - <kbd>Load unpacked</kbd> in the upper left corner
-5. Select the `dist` directory from the boilerplate project
+package.json 修改
 
-### For Firefox: <a name="getting-started-firefox"></a>
 
-1. Run:
-    - Dev: `pnpm dev:firefox`
-    - Prod: `pnpm build:firefox`
-2. Open in browser - `about:debugging#/runtime/this-firefox`
-3. Click - <kbd>Load Temporary Add-on...</kbd> in the upper right corner
-4. Select the `./dist/manifest.json` file from the boilerplate project
+pages/popup 改造
 
-> [!NOTE]
-> In Firefox, you load add-ons in temporary mode. That means they'll disappear after each browser close. You have to load the add-on on every browser launch.
 
-## Install dependency for turborepo: <a name="install-dependency"></a>
+```typescript
+const currentWindow = await chrome.windows.getCurrent()：获取当前窗口
+chrome.sidePanel.open({windowId: currentWindow.id})：打开侧边栏
+```
 
-### For root: <a name="install-dependency-for-root"></a>
+packages/i18n 改造
 
-1. Run `pnpm i <package> -w`
+改为自己的语言包
 
-### For module: <a name="install-dependency-for-module"></a>
+pages/side-panel 改造
 
-1. Run `pnpm i <package> -F <module name>`
 
-`package` - Name of the package you want to install e.g. `nodemon` \
-`module-name` - You can find it inside each `package.json` under the key `name`, e.g. `@extension/content-script`, you can use only `content-script` without `@extension/` prefix
 
-## Environment variables
 
-To add an environment variable:
-
-1. Copy `.example.env` to `.env` (in the same directory)
-2. Add a new record inside `.env`, prefixed with `VITE_`, e.g. `VITE_MY_API_KEY=...`
-3. Edit `./vite-env.d.ts` and in the `ImportMetaEnv` interface, add your variable with the appropriate type, e.g.
-
-   `readonly VITE_MY_API_KEY: string;`
-4. Then you can read the variable via `import.meta.env.MY_API_KEY` (learn more at [Env Variables and Modes](https://vite.dev/guide/env-and-mode))
-
-#### If you want to set it for each package independently:
-
-1. Create `.env` inside that package
-2. Open related `vite.config.mts` and add `envDir: '.'` at the end of this config
-3. Rest steps like above
-
-#### Remember you can't use global and local at the same time for the same package(It will be overwritten)
-
-## Boilerplate structure <a name="structure"></a>
-
-### Chrome extension <a name="structure-chrome-extension"></a>
-
-The extension lives in the `chrome-extension` directory and includes the following files:
-
-- [`manifest.js`](chrome-extension/manifest.js) - script that outputs the `manifest.json`
-- [`src/background`](chrome-extension/src/background) - [background script](https://developer.chrome.com/docs/extensions/mv3/background_pages/) 
-  (`background.service_worker` in manifest.json)
-- [`public`](chrome-extension/public/) - icons referenced in the manifest; content CSS for user's page injection
-
-> [!IMPORTANT]
-> To facilitate development, the boilerplate is configured to "Read and change all your data on all websites".
-> In production, it's best practice to limit the premissions to only the strictly necessary websites. See
-> [Declaring permissions](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions)
-> and edit `manifest.js` accordingly.
-
-### Packages <a name="structure-packages"></a>
-
-Some shared packages:
-
-- `dev-utils` - utilities for Chrome extension development (manifest-parser, logger)
-- `i18n` - custom internationalization package; provides i18n function with type safety and other validation
-- `hmr` - custom HMR plugin for Vite, injection script for reload/refresh, HMR dev-server
-- `shared` - shared code for the entire project (types, constants, custom hooks, components etc.)
-- `storage` - helpers for easier integration with [storage](https://developer.chrome.com/docs/extensions/reference/api/storage), e.g. local/session storages
-- `tailwind-config` - shared Tailwind config for entire project
-- `tsconfig` - shared tsconfig for the entire project
-- `ui` - function to merge your Tailwind config with the global one; you can save components here
-- `vite-config` - shared Vite config for the entire project
-- `zipper` - run `pnpm zip` to pack the `dist` folder into `extension.zip` inside the newly created `dist-zip`
-- `e2e` - run `pnpm e2e` for end-to-end tests of your zipped extension on different browsers
-
-### Pages <a name="structure-pages"></a>
-
-Code that is transpiled to be part of the extension lives in the [pages](pages/) directory.
-
-- [`content`](pages/content/) - [content scripts](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts)
-  (`content_scripts` in manifest.json)
-- [`content-ui`](pages/content-ui) - React UI rendered in the current page (you can see it at the very bottom when you get started)
-  (`content_scripts` in manifest.json)
-- [`content-runtime`](pages/content-runtime/src/) - [injected content scripts](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts#functionality);
-  this can be injected from `popup` like standard `content`
-- [`devtools`](pages/devtools/) - [extend the browser DevTools](https://developer.chrome.com/docs/extensions/how-to/devtools/extend-devtools#creating)
-  (`devtools_page` in manifest.json)
-- [`devtools-panel`](pages/devtools-panel/) - [DevTools panel](https://developer.chrome.com/docs/extensions/reference/api/devtools/panels)
-  for [devtools](pages/devtools/src/index.ts)
-- [`new-tab`](pages/new-tab/) - [override the default New Tab page](https://developer.chrome.com/docs/extensions/develop/ui/override-chrome-pages)
-  (`chrome_url_overrides.newtab` in manifest.json)
-- [`options`](pages/options/) - [options page](https://developer.chrome.com/docs/extensions/develop/ui/options-page)
-  (`options_page` in manifest.json)
-- [`popup`](pages/popup/) - [popup](https://developer.chrome.com/docs/extensions/reference/api/action#popup) shown when clicking the extension in the toolbar
-  (`action.default_popup` in manifest.json)
-- [`side-panel`](pages/side-panel/) - [sidepanel (Chrome 114+)](https://developer.chrome.com/docs/extensions/reference/api/sidePanel)
-  (`side_panel.default_path` in manifest.json)
-
-## Community
-
-To chat with other community members, you can join the [Discord](https://discord.gg/4ERQ6jgV9a) server.
-You can ask questions on that server, and you can also help others.
-
-Also, suggest new features or share any challenges you've faced while developing Chrome extensions!
-
-## Reference
-
-- [Chrome Extensions](https://developer.chrome.com/docs/extensions)
-- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
-- [Rollup](https://rollupjs.org/guide/en/)
-- [Turborepo](https://turbo.build/repo/docs)
-- [Rollup-plugin-chrome-extension](https://www.extend-chrome.dev/rollup-plugin)
-
-## Star History <a name="star-history"></a>
-
-<a href="https://star-history.com/#Jonghakseo/chrome-extension-boilerplate-react-vite&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Jonghakseo/chrome-extension-boilerplate-react-vite&type=Date" />
- </picture>
-</a>
-
-## Contributors <a name="contributors"></a>
-
-This Boilerplate is made possible thanks to all of its contributors.
-
-<a href="https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/graphs/contributors">
-  <img width="500px" src="https://contrib.rocks/image?repo=Jonghakseo/chrome-extension-boilerplate-react-vite" alt="All Contributors"/>
-</a>
-
----
-
-## Special Thanks To
-
-| <a href="https://jb.gg/OpenSourceSupport"><img width="40" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo."></a> | <a href="https://www.linkedin.com/in/j-acks0n"><img width="40" style="border-radius:50%" src='https://avatars.githubusercontent.com/u/23139754' alt='Jackson Hong'/></a> |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-
----
-
-Made by [Jonghakseo](https://jonghakseo.github.io/)

@@ -1,60 +1,58 @@
-import '@src/Popup.css';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
-import type { ComponentPropsWithoutRef } from 'react';
-
+import { type ComponentPropsWithoutRef } from 'react';
+// 通知配置对象,用于显示注入脚本错误的通知
 const notificationOptions = {
   type: 'basic',
   iconUrl: chrome.runtime.getURL('icon-34.png'),
-  title: 'Injecting content script error',
-  message: 'You cannot inject script here!',
+  title: '注入脚本错误',
+  message: '您不能在此注入脚本!',
 } as const;
 
 const Popup = () => {
+  // 使用存储钩子获取主题设置
   const theme = useStorage(exampleThemeStorage);
   const isLight = theme === 'light';
-  const logo = isLight ? 'popup/logo_vertical.svg' : 'popup/logo_vertical_dark.svg';
-  const goGithubSite = () =>
-    chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
 
-  const injectContentScript = async () => {
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true });
-
-    if (tab.url!.startsWith('about:') || tab.url!.startsWith('chrome:')) {
-      chrome.notifications.create('inject-error', notificationOptions);
-    }
-
-    await chrome.scripting
-      .executeScript({
-        target: { tabId: tab.id! },
-        files: ['/content-runtime/index.iife.js'],
-      })
-      .catch(err => {
-        // Handling errors related to other paths
-        if (err.message.includes('Cannot access a chrome:// URL')) {
-          chrome.notifications.create('inject-error', notificationOptions);
-        }
+  const toggleSidePanel = async () => {
+    try {
+      // 获取当前窗口
+      const currentWindow = await chrome.windows.getCurrent();
+      if (!currentWindow) {
+        throw new Error('当前窗口不存在');
+      }
+      // 使用 windowId 打开侧边栏
+      await chrome.sidePanel.open({
+        windowId: currentWindow.id as number,
       });
+
+      // 关闭 popup
+      window.close();
+    } catch (error) {
+      // 显示错误通知
+      chrome.notifications.create({
+        ...notificationOptions,
+        message: '无法打开侧边栏,请确保扩展正常运行',
+      });
+      console.error('侧边栏操作失败:', error);
+    }
   };
 
   return (
-    <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
-      <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
-        <p>
-          Edit <code>pages/popup/src/Popup.tsx</code>
-        </p>
-        <button
-          className={
-            'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-            (isLight ? 'bg-blue-200 text-black' : 'bg-gray-700 text-white')
-          }
-          onClick={injectContentScript}>
-          Click to inject Content Script
-        </button>
-        <ToggleButton>Toggle theme</ToggleButton>
+    <div className={`p-4 text-center ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
+      <header className={` ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
+        <div className="text-lg font-bold">码农写作助手,帮你快速生成内容</div>
+        <div className="flex justify-center gap-2">
+          <ToggleButton>切换主题</ToggleButton>
+          <button
+            className={
+              'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
+              (isLight ? 'bg-blue-200 text-black' : 'bg-gray-700 text-white')
+            }
+            onClick={toggleSidePanel}>
+            打开侧边栏
+          </button>
+        </div>
       </header>
     </div>
   );
@@ -76,4 +74,4 @@ const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
   );
 };
 
-export default withErrorBoundary(withSuspense(Popup, <div> Loading ... </div>), <div> Error Occur </div>);
+export default withErrorBoundary(withSuspense(Popup, <div> 加载中 ... </div>), <div>未知错误</div>);

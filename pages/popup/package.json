@@ -1,7 +1,7 @@
 {
   "name": "@extension/popup",
   "version": "0.3.4",
-  "description": "chrome extension - popup",
+  "description": "点击扩展图标显示的弹窗",
   "private": true,
   "sideEffects": true,
   "files": [
